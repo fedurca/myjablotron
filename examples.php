@@ -9,14 +9,17 @@ include('myjablotron.class.php');
 
 define('MY_COOKIE_FILE', '/tmp/cookies.txt'); // curl store cookies
 
+$config = parse_ini_file("config.ini");
+$MyUsername = $config['username'];
+$MyPassword = $config['password'];
+$MyPIN = $config['pin'];
 
-$MyUsername = 'login'; // Set login to www.jablonet.net
-$MyPassword = 'secret'; // Set password to www.jablonet.net
-$MyPIN = '0000'; // Set PIN
+$debug = $config['debug'];
+$localsource = $config['localsource'];
 
+$ja100 = new MyJablotron($MyUsername, $MyPassword, $localsource);
 
-$ja100 = new MyJablotron($MyUsername, $MyPassword);
-$ja100->debug(true, 'php://stdout'); // print curl response to STDOUT
+$ja100->debug($debug, 'php://stdout'); // print curl response to STDOUT
 
 if($ja100->login() == true) {
 	/*
@@ -68,9 +71,10 @@ if($ja100->login() == true) {
 	/*
 	 * Get history
 	 */
-	$arrayOutput = $ja100->getHistory();
+	$arrayOutput = $ja100->getEnergy();
 	print_r($arrayOutput);
-
+	
+	echo $arrayOutput[0]['total'];
 }
 else {
 	/*

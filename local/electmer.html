@@ -1,0 +1,82 @@
+
+            <div class="action_menu">
+                <div class="content_block">
+                    <ul id="topSwitch">
+                        <li onclick="switchTopContentDashboard('section', true);" class="section ">
+                                    <div class="img">
+                                        <a href="javascript:void(0);" class="nohover"><img src="/app/ja100/styles/img/action_menu/ic-tab-sections.png" alt=""></a>
+                                        <a href="javascript:void(0);" class="hover"><img src="/app/ja100/styles/img/action_menu/ic-tab-sections_hover.png" alt=""></a>
+                                    </div>
+                                    <label>Sections</label>
+                                </li><li onclick="switchTopContentDashboard('keyboard', true);" class="keyboard ">
+                                    <div class="img">
+                                        <a href="javascript:void(0);" class="nohover"><img src="/app/ja100/styles/img/action_menu/ic-tab-keyboards.png" alt=""></a>
+                                        <a href="javascript:void(0);" class="hover"><img src="/app/ja100/styles/img/action_menu/ic-tab-keyboards_hover.png" alt=""></a>
+                                    </div>
+                                    <label>Keypad</label>
+                                </li><li onclick="switchTopContentDashboard('pg', true);" class="pg ">
+                                    <div class="img">
+                                        <a href="javascript:void(0);" class="nohover"><img src="/app/ja100/styles/img/action_menu/ic-tab-pgs.png" alt=""></a>
+                                        <a href="javascript:void(0);" class="hover"><img src="/app/ja100/styles/img/action_menu/ic-tab-pgs_hover.png" alt=""></a>
+                                    </div>
+                                    <label>Automation (PG)</label>
+                                </li><li onclick="switchTopContentDashboard('heat', true);" class="heat ">
+                                    <div class="img">
+                                        <a href="javascript:void(0);" class="nohover"><img src="/app/ja100/styles/img/action_menu/ic-tab-temp.png" alt=""></a>
+                                        <a href="javascript:void(0);" class="hover"><img src="/app/ja100/styles/img/action_menu/ic-tab-temp_hover.png" alt=""></a>
+                                    </div>
+                                    <label>Thermostats and thermometers</label>
+                                </li><li onclick="switchTopContentDashboard('electmer', true);" class="electmer activeTab">
+                                    <div class="img">
+                                        <a href="javascript:void(0);" class="nohover"><img src="/app/ja100/styles/img/action_menu/ic-tab-meters.png" alt=""></a>
+                                        <a href="javascript:void(0);" class="hover"><img src="/app/ja100/styles/img/action_menu/ic-tab-meters_hover.PNG" alt=""></a>
+                                    </div>
+                                    <label>Meters</label>
+                                </li>                            <li onclick="switchTopContentDashboard('history', true);"
+                                class="history ">
+                                <div class="img">
+                                    <a href="javascript:void(0);" class="nohover"><img
+                                                src="/app/ja100/styles/img/action_menu/ic-tab-history.png" alt=""></a>
+                                    <a href="javascript:void(0);" class="hover"><img
+                                                src="/app/ja100/styles/img/action_menu/ic-tab-history_hover.png" alt=""></a>
+                                </div>
+                                <label>History</label>
+                            </li>
+                                                </ul>
+                </div>
+            </div>
+            <div class="action_menu_content">
+    <div class='container '>
+        <div class='content_block'>
+            <div id="top" class="cleaner">
+                <div id="content" class="cleaner">
+                    <div id="flexi-stav" class="cleaner">
+                        <div class="stav-content cleaner">
+                            <div class="left cleaner">
+                                <h3>Meters</h3>
+                                <input id="decimal_point" type="hidden" value="."><ul><li class="row-electrometer" id="009">
+                              <div id="elektromer009" class=name-electrometer>Vodoměr new</div> 
+                                <div class="status-electrometer">
+                                    <ul>
+                                        
+										<li>Total consumption: <span class="energyRow" id="emv009">741966 l</span></li>
+                                        <li>Today's consumption: <span class="energyRow" id="emd009">280 l</span></li>
+                                        <li>Monthly consumption: <span class="energyRow" id="emm009">3010 l</span></li>
+                                    </ul><a class="status-ico" title="View graph" onclick="showElectGraph('009','1');"></a></div></li></li></ul>                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+                //ulozeni seznamu elektromeru
+        electrometer.list = {"009":{"id":90371476,"name":"Vodom\u011br new","index":9,"type":"JA-150EM-DIN","active":1,"section":"0"}};
+        //ulozeni stavu elektromeru, kde existuje historie
+        electrometer.states = {"009":{"LowTariff":{"CurrentDayPulseCount":0,"CurrentMonthPulseCount":0},"HighTariff":{"CurrentDayPulseCount":280,"CurrentMonthPulseCount":3010},"PulsesPerUnit":"1","PulseUnit":"l","PriceLowTariff":"0.0983","PriceHighTariff":"0.0983","CurrencyUnit":"CZK","ElectrometerLastTariff":"1","CurrentTariff":"High","ElectrometerOffsetLowTariff":"0","ElectrometerOffsetHighTariff":"705270","PulseCountLowTariff":0,"PulseCountHighTariff":36696,"isHistory":1}};
+
+    });
+</script>

@@ -17,11 +17,14 @@ class MyJablotron {
 	private $serviceId; // service ID
 
 	private $errors; // errors
+	
+	private $localsource;
 
-
-	public function __construct($username, $password) {
+	public function __construct($username, $password, $localsource = false) {
 		$this->username = $username;
 		$this->password = $password;
+		$this->localsource = $localsource;
+
 		if( ! defined('MY_COOKIE_FILE')) {
 			define('MY_COOKIE_FILE', '/tmp/cookies.txt');
 		}
@@ -60,6 +63,8 @@ class MyJablotron {
 	 * @return boolean
 	 */
 	public function login() {
+		if ($this->localsource) return true;
+
 		$this->curl('https://www.jablonet.net/ajax/login.php', 'login='.urlencode($this->username).'&heslo='.urlencode($this->password).'&aStatus=200&loginType=Login');
 		$output = $this->curlGetResponse('output');
 		if($output !== false) {
@@ -302,6 +307,45 @@ class MyJablotron {
 		return $data;
 	}
 
+	/**
+	 * Get Energy without paging
+	 * @return array
+	 */
+	public function getEnergy() {
+		$localSourceFile = './local/electmer.html';
+		if ($this->localsource) {
+			$output = file_get_contents($localSourceFile);
+		} else {
+			$this->curl('https://www.jablonet.net/app/ja100/switch.php?switch=electmer', null);
+			$output = $this->curlGetResponse('output');
+			file_put_contents($localSourceFile,$output);
+		}
+
+		$data = Array();
+		$i = 0;
+		if (preg_match_all('~<li class="row-electrometer" id="([0-9][0-9][0-9])">~', $output, $m)) {
+			foreach($m[1] as $rowId) {
+				// rowId contains device Id
+
+				if (preg_match('~<div id="elektromer'.$rowId.'" class=name-electrometer>(.+)</div>~', $output, $m2)) {
+					$data[$i]['name'] = $m2[1]; 
+				}
+
+				if (preg_match('~<span class="energyRow" id="emv'.$rowId.'">([0-9]+.*) l</span>~', $output, $m2)) {
+					$data[$i]['total'] = $m2[1]; 
+				}
+				if (preg_match('~<span class="energyRow" id="emd'.$rowId.'">([0-9]+.*) l</span>~', $output, $m2)) {
+					$data[$i]['daily'] = $m2[1]; 
+				}
+				if (preg_match('~<span class="energyRow" id="emm'.$rowId.'">([0-9]+.*) l</span>~', $output, $m2)) {
+					$data[$i]['monthly'] = $m2[1]; 
+				}
+				$i++;
+			}
+		}
+
+		return $data;
+	}
 
 	/**
 	 * Get Errors
